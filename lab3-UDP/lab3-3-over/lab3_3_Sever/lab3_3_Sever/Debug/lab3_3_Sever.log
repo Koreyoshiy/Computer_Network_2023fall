@@ -1,0 +1,4 @@
+﻿  SR_server.cpp
+D:\GitHub_Koreyoshiy_Files\Computer_Network_2023fall\lab3-UDP\lab3-3\lab3_3_Sever\lab3_3_Sever\SR_server.cpp(240,25): warning C4018: “>=”: 有符号/无符号不匹配
+D:\GitHub_Koreyoshiy_Files\Computer_Network_2023fall\lab3-UDP\lab3-3\lab3_3_Sever\lab3_3_Sever\SR_server.cpp(240,57): warning C4018: “<”: 有符号/无符号不匹配
+  lab3_3_Sever.vcxproj -> D:\GitHub_Koreyoshiy_Files\Computer_Network_2023fall\lab3-UDP\lab3-3\lab3_3_Sever\Debug\lab3_3_Sever.exe
