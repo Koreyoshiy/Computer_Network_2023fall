@@ -6,10 +6,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fstream>
+#include <sys/types.h>
 #pragma comment(lib, "ws2_32.lib")
 using namespace std;
 
-#define PORT 7001
+#define PORT 6001
 #define IP "127.0.0.2"
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -179,6 +180,7 @@ int Client_Server_Disconnect(SOCKET& socketServer, SOCKADDR_IN& clieAddr, int& c
         if (recvfrom(socketServer, buffer, sizeof(packet), 0, (sockaddr*)&clieAddr, &clieAddrlen) == -1) {
             cout << "无法接收客户端发送的连接请求" << endl;
             return 0;
+            //continue;
         }
         memcpy(&packet, buffer, sizeof(packet));
         if (packet.tag == FIN_ACK && (compute_sum((WORD*)&packet, sizeof(packet)) == 0)) {
@@ -194,6 +196,7 @@ int Client_Server_Disconnect(SOCKET& socketServer, SOCKADDR_IN& clieAddr, int& c
     memcpy(buffer, &packet, sizeof(packet));
     if (sendto(socketServer, buffer, sizeof(packet), 0, (sockaddr*)&clieAddr, clieAddrlen) == -1)
     {
+        cout << "sendto函数发送数据出错！" << endl;
         return 0;
     }
 
@@ -207,6 +210,7 @@ int Client_Server_Disconnect(SOCKET& socketServer, SOCKADDR_IN& clieAddr, int& c
     memcpy(buffer, &packet, sizeof(packet));
     if (sendto(socketServer, buffer, sizeof(packet), 0, (sockaddr*)&clieAddr, clieAddrlen) == -1)
     {
+        cout << "sendto函数发送数据出错！" << endl;
         return 0;
     }
     clock_t start = clock();//记录第三次挥手发送时间
@@ -467,8 +471,8 @@ int Recv_Message(SOCKET& socketServer, SOCKADDR_IN& clieAddr, int& clieAddrlen, 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // =============================================main======================================================
 // ////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 功能包括：建立连接、差错检测、确认重传等。
-// 流量控制采用停等机制
+// 功能包括：建立连接、差错检测、确认重传，累计确认等。
+// 基于滑动窗口的流量控制机制
 
 int main()
 {
@@ -606,6 +610,7 @@ int main()
             cout << "=====================================================================" << endl;
         }
     }
+    cout << endl;
     Client_Server_Disconnect(server, addr, length);
     closesocket(server);
     WSACleanup();

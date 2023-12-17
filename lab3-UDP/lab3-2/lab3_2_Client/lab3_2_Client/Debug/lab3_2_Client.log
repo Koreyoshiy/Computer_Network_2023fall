@@ -1,0 +1,6 @@
+﻿  client.cpp
+D:\GitHub_Koreyoshiy_Files\Computer_Network_2023fall\lab3-UDP\lab3-2\lab3_2_Client\lab3_2_Client\client.cpp(40,2): warning C4091: “typedef ”: 没有声明变量时忽略“Packet_Header”的左侧
+D:\GitHub_Koreyoshiy_Files\Computer_Network_2023fall\lab3-UDP\lab3-2\lab3_2_Client\lab3_2_Client\client.cpp(41,9): warning C4086: pragma 参数应为 "1"、"2"、"4"、"8" 或者 "16"
+D:\GitHub_Koreyoshiy_Files\Computer_Network_2023fall\lab3-UDP\lab3-2\lab3_2_Client\lab3_2_Client\client.cpp(568,23): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\GitHub_Koreyoshiy_Files\Computer_Network_2023fall\lab3-UDP\lab3-2\lab3_2_Client\lab3_2_Client\client.cpp(615,23): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  lab3_2_Client.vcxproj -> D:\GitHub_Koreyoshiy_Files\Computer_Network_2023fall\lab3-UDP\lab3-2\lab3_2_Client\Debug\lab3_2_Client.exe

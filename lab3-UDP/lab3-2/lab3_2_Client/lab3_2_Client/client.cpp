@@ -6,10 +6,11 @@
 #include <stdlib.h>
 #include <fstream>
 #include <string.h>
+
 #pragma comment(lib, "ws2_32.lib")
 using namespace std;
 
-USHORT PORT = 7000;
+USHORT PORT = 6000;
 #define IP "127.0.0.1"
 
 /////////////////////////////////////////////////////////////////////////////
@@ -206,7 +207,7 @@ int Client_Server_Disconnect(SOCKET& socketClient, SOCKADDR_IN& servAddr, int& s
         {
             sendto(socketClient, buffer, sizeof(packet), 0, (sockaddr*)&servAddr, servAddrlen);
             start = clock();
-            cout << "第一次握手超时，正在进行重传" << endl;
+            cout << "第一次挥手超时，正在进行重传" << endl;
         }
     }
 
@@ -218,6 +219,7 @@ int Client_Server_Disconnect(SOCKET& socketClient, SOCKADDR_IN& servAddr, int& s
         cout << "成功收到第二次挥手信息" << endl;
     }
     else {
+        cout << "第二次挥手失败" << endl;
         cout << "无法接收服务端回传断开连接" << endl;
         return 0;
     }
@@ -225,8 +227,10 @@ int Client_Server_Disconnect(SOCKET& socketClient, SOCKADDR_IN& servAddr, int& s
     // 客户端接收服务端发来的第三次挥手
     while (1) {
         if (recvfrom(socketClient, buffer, sizeof(packet), 0, (sockaddr*)&servAddr, &servAddrlen) == -1) {
+            cout << "第三次挥手失败" << endl;
             cout << "无法接收服务端回传断开连接" << endl;
             return 0;
+            //continue;
         }
         // 对接收数据进行校验和检验
         memcpy(&packet, buffer, sizeof(packet));
@@ -325,6 +329,7 @@ void Send_Message(SOCKET& socketClient, SOCKADDR_IN& servAddr, int& servAddrlen,
             last = (last + 1) % Window;
         }
         else {
+            //接收到的确认号与期望的确认号之间的差值
             int dis = (int(packet.ack) - Ack_num) > 0 ? (int(packet.ack) - Ack_num) : (int(packet.ack) + 256 - Ack_num);
             //忽略重复ACK
             if (packet.ack == (Ack_num + 256 - 1) % 256) {
@@ -375,7 +380,7 @@ void Send_Message(SOCKET& socketClient, SOCKADDR_IN& servAddr, int& servAddrlen,
         cout << "The end token was successfully received" << endl;
     }
     else {
-        cout << "无法接收客户端回传" << endl;
+        cout << "The end token wasn't successfully received" << endl;
     }
     return;
 }
@@ -480,7 +485,7 @@ int Recv_Message(SOCKET& socketServer, SOCKADDR_IN& clieAddr, int& clieAddrlen, 
 // ====================================main============================================
 // ////////////////////////////////////////////////////////////////////////////////////
 // 功能包括：建立连接、差错检测、确认重传等。
-// 流量控制采用停等机制
+// 基于滑动窗口的流量控制机制
 
 int main()
 {
