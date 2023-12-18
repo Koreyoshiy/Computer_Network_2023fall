@@ -1,0 +1,4 @@
+﻿  SR_client.cpp
+D:\GitHub_Koreyoshiy_Files\Computer_Network_2023fall\lab3-UDP\lab3-3\lab3_3_Client\lab3_3_Client\SR_client.cpp(234,21): warning C4244: “=”: 从“std::streamoff”转换到“int”，可能丢失数据
+D:\GitHub_Koreyoshiy_Files\Computer_Network_2023fall\lab3-UDP\lab3-3\lab3_3_Client\lab3_3_Client\SR_client.cpp(259,16): warning C4018: “<=”: 有符号/无符号不匹配
+  lab3_3_Client.vcxproj -> D:\GitHub_Koreyoshiy_Files\Computer_Network_2023fall\lab3-UDP\lab3-3\lab3_3_Client\Debug\lab3_3_Client.exe
